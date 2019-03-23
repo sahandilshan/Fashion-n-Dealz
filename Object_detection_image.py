@@ -5,13 +5,10 @@ import numpy as np
 import tensorflow as tf
 
 
-
-
-# Import utilites
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
-# Name of the directory containing the object detection module we're using
+
 MODEL_NAME = 'inference_graph'
 IMAGE_NAME = 'inputs/test13.jpg'
 
