@@ -5,13 +5,10 @@ import numpy as np
 import tensorflow as tf
 
 
-
-
-# Import utilites
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
 
-# Name of the directory containing the object detection module we're using
+
 MODEL_NAME = 'inference_graph'
 IMAGE_NAME = 'inputs/test10.jpg'
 
@@ -31,11 +28,7 @@ PATH_TO_IMAGE = os.path.join(CWD_PATH,IMAGE_NAME)
 # Number of classes the object detector can identify
 NUM_CLASSES = 3
 
-# Load the label map.
-# Label maps map indices to category names, so that when our convolution
-# network predicts `5`, we know that this corresponds to `king`.
-# Here we use internal utility functions, but anything that returns a
-# dictionary mapping integers to appropriate string labels would be fine
+
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
