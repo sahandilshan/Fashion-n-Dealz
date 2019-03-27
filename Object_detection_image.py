@@ -13,7 +13,7 @@ from object_detection.utils import visualization_utils as vis_util
 
 # Name of the directory containing the object detection module we're using
 MODEL_NAME = 'inference_graph'
-IMAGE_NAME = 'inputs/test13.jpg'
+IMAGE_NAME = 'inputs/test10.jpg'
 
 # Grab path to current working directory
 CWD_PATH = os.getcwd()
@@ -136,8 +136,11 @@ for file in files:
 cv2.imshow('Object detector', image)
 cv2.imwrite('outputs/output'+str(i)+'.jpg',image)
 
+print("Job Done")
+
 # Press any key to close the image
 cv2.waitKey(0)
 
 # Clean up
 cv2.destroyAllWindows()
+
