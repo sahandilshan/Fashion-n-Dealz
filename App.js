@@ -12,6 +12,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Slider } from 'react-native';
 // eslint-disable-next-line import/no-unresolved
 import { RNCamera } from 'react-native-camera';
 //first commit
+//test commit
 const flashModeOrder = {
   off: 'on',
   on: 'auto',
