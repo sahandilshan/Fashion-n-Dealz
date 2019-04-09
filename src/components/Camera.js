@@ -51,6 +51,32 @@ class Camera extends Component{
           } else {
             let source = response;
             
+            /*try {
+              let response = await fetch(
+                'https://app1-3223c.firebaseio.com/place.json',{
+                  method:"POST",
+                  body:JSON.stringify( {userName: "react",
+                  password: "123"})}
+              );
+              let responseJson = await response.json();
+              return responseJson.movies;
+            } catch (error) {
+              console.error(error);
+            }*/
+            
+            fetch("https://app1-3223c.firebaseio.com/place.json",{
+              method:"POST",
+              body:JSON.stringify( {userName: "react",
+              password: "123"})
+              
+            }).catch((error)=>{
+              console.log("Api call error");
+              alert(error.message);}).
+            then(res=>res.json()).
+            then(parsedres=>{//console.log(parsedres);
+              alert(JSON.stringify(parsedres));
+            });
+            console.log("done");
             // You can also display the image using data:
             // let source = { uri: 'data:image/jpeg;base64,' + response.data };
             this.setState({
