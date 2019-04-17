@@ -119,6 +119,7 @@ export default class CameraScreen extends React.Component {
       }
     }
   };
+  onBarCodeRead = (e) => this.setState({qrcode: e.data});
 
   toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
 
