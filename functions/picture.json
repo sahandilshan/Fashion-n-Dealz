@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fashionndealz",
+  "private_key_id": "609d8cbc1d0e8771d772182e2b42f746502c3bcb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCi5HKZYpV2XurG\nQEZa6eGBdDZqrAZp1A0G8XJ77PPEHB4QMXEPYOQRjM/EHA6uj3HM276sFU36eLzx\nmb5zC0NJvKglxNP24+gPz+EvPDr116ntSGTIaLGuGEpD8dyHa4OihHWrDf7+pv6C\nALw8ry+LiFqupOw/9kg38rl6hb28NRk5dKHpWochd1DUiWrk/u9UqgqqjH/UXBKC\nxQ3eUJ/HfF2Rv55V2l6u1jjIJWclbvXLoSBusaS59UeIkKm2OAIie2BTuGdXwunN\nKN0d5qGbeUG6XraSO8LVzt2PQg2Gkq5wnAlJJU72ggoPfqa6s54dKR+iBhylGziP\nNBOei4ArAgMBAAECggEAUHF7Os6Zu0xiqydg11L7P8ARg5qSzD6hdFVW0WaSd73f\nBuYzzIFwAE7G6DVm9sP2UlIPFtKqoNBxlurzR8M/JrIZZBWRDDM/Dlf+ACLBh1lL\nHNiMlQBHBxAN1QIjg2kQJ/k8Vw5haIc11yPf0iQ92a2sAuWFmozY23BuMtjLe57+\n0jA4S7gEOby1pIhN936FjjEXubZcAmXwqEUWSrrwn7ZArWL32+5aUc56zRZW8S6j\nwZKub3UFaVYOnb9rh/pVNsk602FP9m6hM0oSUA2hYzDgSsSZ7YbHFtGn4XzECc4X\n2eNoqGWFue6arMHfASXq5PuzCesJMI75QI5UVpoSiQKBgQDgQ9x1GDkr4+cq5yRH\nJIAv93e1HABfGVeqgnLIsAAHpTS2pvEG9/gsj4Y2koWQNx2Lo7IKXPMv3fh8rpxf\n5hkgNk/4dMzKIRkl2esuCLAfmbC29c9BUJEfv/7afegXwNfIY5golLTc8qyzYnDZ\nDqsuKefUGX4ZztYEIub3KkofJwKBgQC58VKk73AncPggifIiq32jxunhm+HxeLW+\nOV5kOGfmzqysMiXpzaGaQNf7GBaQrBGrlYEwCz8WGvITNCQp/SDbwodqVXSJn36i\n5VVaZlgOwUbrsnKlJjK+YIvQ9UxX2WB+GcWFSP/RKoBsG89rvaoa3ZHVDkbzybNN\nb/+Wlu25XQKBgDvPHU5FJYok/5ObjTtD6sPgFZbBXv/9vDmHDKGk/n0LfCFyKDmZ\njCAmLr8DGIe7iy+gemz1GQ4c/pYR4zZYIT9L/MvgKnWFmjVUBrqCKqZi0JQavilH\nGU0EYS1YArvC/Ek+9mdsMUfzmEdG652XoeNv3ZndKporZTw5KqukJZxlAoGAcuG5\nqPPSfFvcweXYtzjzIDwmhmCUQWfOCiBRxGPhNgYdQyqcqA6HONG1X4qrbmkRZcyy\nC6f3K0YsqFa/vT2Kjpxqo/T2Uo07ZZOBn5+56ivaEIepM4YdNehamhjkOSax6lcr\n5USL4YR74c9w4OVG8uBQWK1AgyDsafy3kiff6nUCgYEAj4p4Pgowdb36H/IQuO/7\n4zGqGHjOKnfIRXEcPY15h8bDboO98+wUN1FH7qHp5RFKZE7nVaEXH3YMgKKPrj4p\n4EBAH+pGfM5m1YIXJ3sfb1r7idcdYfd/CVT5sSCFIKbuPy4ZTfLjFwpjXoJZvd+d\n0Ca8AmfAA5BguNnX+pZRhi8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-vtaid@fashionndealz.iam.gserviceaccount.com",
+  "client_id": "108625207738575158865",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-vtaid%40fashionndealz.iam.gserviceaccount.com"
+}

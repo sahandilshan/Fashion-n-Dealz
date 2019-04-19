@@ -64,7 +64,7 @@ class Camera extends Component{
               console.error(error);
             }*/
             
-            fetch("https://app1-3223c.firebaseio.com/place.json",{
+          /*  fetch("https://app1-3223c.firebaseio.com/place.json",{
               method:"POST",
               body:JSON.stringify( {userName: "react",
               password: "123"})
@@ -78,11 +78,25 @@ class Camera extends Component{
             });
             console.log("done");
             // You can also display the image using data:
-            // let source = { uri: 'data:image/jpeg;base64,' + response.data };
+            // let source = { uri: 'data:image/jpeg;base64,' + response.data };*/
             this.setState({
               filePath: source,
               pickedImage:{uri:response.uri}
             });
+            console.log("cccc"+JSON.stringify({image:response.data}));
+            fetch("https://us-central1-fashionndealz.cloudfunctions.net/storeImage",{
+              method:"POST",
+              body:JSON.stringify({image:response.data})
+              
+            }).catch((error)=>{
+              console.log("Api call error");
+              alert(error.message);}).
+            then(res=>res.json()).
+            then(parsedRes=>{
+              console.log(parsedRes);
+              alert(JSON.stringify(parsedRes));
+            });
+            console.log("done");
           }
         });
       };
