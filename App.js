@@ -7,43 +7,79 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, ImageBackground } from 'react-native';
+import PropTypes from 'prop-types';
+import Login from './screens/Login';
+import Register from './screens/Register';
+import ForgotPassword from './screens/ForgotPassword';
+import { w } from './api/Dimensions';
+import bgSrc from './assets/wallpaper.png';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
+  state = {
+    currentScreen: 'login', // can be: 'login' or 'register' or 'forgot'
+  };
+
+  changeScreen = screenName => () => {
+    this.setState({ currentScreen: screenName });
+  };
+
+  userSuccessfullyLoggedIn = (user) => {
+    this.props.login(user);
+  };
+
   render() {
+    let screenToShow;
+
+    switch(this.state.currentScreen) {
+      case 'login':
+        screenToShow = <Login change={this.changeScreen} success={this.userSuccessfullyLoggedIn}/>;
+        break;
+      case 'register':
+        screenToShow = <Register change={this.changeScreen} />;
+        break;
+      case 'forgot':
+        screenToShow = <ForgotPassword change={this.changeScreen}/>;
+        break;
+    }
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+      <KeyboardAvoidingView
+        behavior="position"
+        keyboardVerticalOffset={-w(40)}
+        style={styles.container}
+      >
+        <ImageBackground
+          source={this.props.background}
+          style={styles.background}
+          resizeMode="stretch"
+
+        >
+          {screenToShow}
+        </ImageBackground>
+      </KeyboardAvoidingView>
+    )
   }
 }
 
+App.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  background:bgSrc ,
+};
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#555',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  background: {
+    width: '100%',
+    height: '100%',
+  }
+  
 });
