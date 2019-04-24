@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+
+<body>
+    {% for post in posts %}
+    <h1>{{post.Name}}</h1>
+    <p>{{post.Age}}</p>
+    <p>{{post.Job}}</p>
+    {% endfor %}
+</body>
+
+</html>
