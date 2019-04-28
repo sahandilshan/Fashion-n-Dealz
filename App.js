@@ -14,6 +14,19 @@ import Register from './screens/Register';
 import ForgotPassword from './screens/ForgotPassword';
 import { w } from './api/Dimensions';
 import bgSrc from './assets/wallpaper.png';
+import * as firebase from 'firebase';
+
+var config = {
+  apiKey: "AIzaSyBwG3KbSKvXCT8Y9baflD2MBw3dZY4vWlU",
+    authDomain: "login-f35ab.firebaseapp.com",
+    databaseURL: "https://login-f35ab.firebaseio.com",
+    projectId: "login-f35ab",
+    storageBucket: "login-f35ab.appspot.com",
+    messagingSenderId: "1031605967460"
+
+};
+
+firebase.initializeApp(config);
 
 
 export default class App extends Component {
