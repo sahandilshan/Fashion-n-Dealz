@@ -1,5 +1,6 @@
 import React ,{Component}from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
+import  QRCODE from './src/components/qrcode';
  
 import { createAppContainer, createMaterialTopTabNavigator, createDrawerNavigator, createStackNavigator } from "react-navigation";
  
@@ -34,33 +35,6 @@ class HamburgerIcon extends Component {
   }
 }
  
-class Home_Screen extends Component {
- 
-  static navigationOptions =
-    {
-      title: 'Home',
- 
-    };
- 
-  gotoNextActivity = () => {
-    this.props.navigation.navigate('Second');
- 
-  }
- 
-  render() {
- 
-    return (
- 
-      <View style={styles.MainContainer}>
- 
-        <Text style={styles.text}>This is Home Screen Activity.</Text>
- 
-        <Button onPress={this.gotoNextActivity} title='Open Second Activity' />
- 
-      </View>
-    );
-  }
-}
  
 class Settings_Screen extends Component {
  
@@ -138,7 +112,7 @@ class Details_Screen extends Component {
  
 export const Tab_1 = createMaterialTopTabNavigator({
   First: {
-    screen: Home_Screen,
+    screen: QRCODE,
   },
   Second: {
     screen: Settings_Screen,
