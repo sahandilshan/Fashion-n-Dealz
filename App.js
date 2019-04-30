@@ -1,10 +1,22 @@
 import React ,{Component}from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image, Platform, Dimensions } from 'react-native';
 import  QRCODE from './src/components/qrcode';
 import  BARCODE  from './src/components/barcode/barcode'
+import MenuDrawer from './src/menudrawer/MenuDrawer';
  
 import { createAppContainer, createMaterialTopTabNavigator, createDrawerNavigator, createStackNavigator } from "react-navigation";
  
+
+const WIDTH = Dimensions.get('window').width;
+
+const DrawerConfig = {
+	drawerWidth: WIDTH*0.83,
+	contentComponent: ({ navigation }) => {
+		return(<MenuDrawer navigation={navigation} />)
+	}
+}
+
+
 class HamburgerIcon extends Component {
  
   toggleDrawer = () => {
@@ -199,8 +211,11 @@ const MyDrawerNavigator = createDrawerNavigator({
  
   }
  
-});
+},DrawerConfig
+
+);
  
+
 export default createAppContainer(MyDrawerNavigator);
  
 const styles = StyleSheet.create({
@@ -221,5 +236,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10
   },
+
+  
  
 });
+
