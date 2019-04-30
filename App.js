@@ -1,6 +1,7 @@
 import React ,{Component}from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import  QRCODE from './src/components/qrcode';
+import  BARCODE  from './src/components/barcode/barcode'
  
 import { createAppContainer, createMaterialTopTabNavigator, createDrawerNavigator, createStackNavigator } from "react-navigation";
  
@@ -35,26 +36,6 @@ class HamburgerIcon extends Component {
   }
 }
  
- 
-class Settings_Screen extends Component {
- 
-  static navigationOptions =
-    {
-      title: 'Settings',
-    };
- 
-  render() {
- 
-    return (
- 
-      <View style={styles.MainContainer}>
- 
-        <Text style={styles.text}>This is Settings Screen Activity.</Text>
- 
-      </View>
-    );
-  }
-}
  
 class Student_Screen extends Component {
  
@@ -115,7 +96,7 @@ export const Tab_1 = createMaterialTopTabNavigator({
     screen: QRCODE,
   },
   Second: {
-    screen: Settings_Screen,
+    screen: BARCODE,
   }
 }, {
     tabBarPosition: 'top',
