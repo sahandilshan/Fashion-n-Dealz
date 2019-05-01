@@ -17,12 +17,12 @@ import bgSrc from './assets/wallpaper.png';
 import * as firebase from 'firebase';
 
 var config = {
-  apiKey: "AIzaSyBwG3KbSKvXCT8Y9baflD2MBw3dZY4vWlU",
-    authDomain: "login-f35ab.firebaseapp.com",
-    databaseURL: "https://login-f35ab.firebaseio.com",
-    projectId: "login-f35ab",
-    storageBucket: "login-f35ab.appspot.com",
-    messagingSenderId: "1031605967460"
+  apiKey: "AIzaSyBV_rxIEkOuxVL13UtzYTicE3C99g4zZx0",
+    authDomain: "fashionndealz.firebaseapp.com",
+    databaseURL: "https://fashionndealz.firebaseio.com",
+    projectId: "fashionndealz",
+    storageBucket: "fashionndealz.appspot.com",
+    messagingSenderId: "579012181485"
 
 };
 
