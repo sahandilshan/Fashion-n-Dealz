@@ -27,9 +27,12 @@ var config = {
 };
 
 firebase.initializeApp(config);
+console.disableYellowBox = true;
+
 
 
 export default class App extends Component {
+  
   state = {
     currentScreen: 'login', // can be: 'login' or 'register' or 'forgot'
   };

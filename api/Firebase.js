@@ -1,6 +1,10 @@
 import firebase from "firebase";
+import { Alert} from 'react-native';
+
 
 class Firebase {
+
+
 
   userLogin = (email, password) => {
     return new Promise(resolve => {
@@ -8,14 +12,35 @@ class Firebase {
         .catch(error => {
           switch (error.code) {
             case 'auth/invalid-email':
-              console.warn('Invalid email address format.');
+            Alert.alert(
+              "Warning!",
+              "Invalid Email format. Please try again!",
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
               break;
             case 'auth/user-not-found':
             case 'auth/wrong-password':
-              console.warn('Invalid email address or password');
+            Alert.alert(
+              "Warning!",
+              "Invalid Email address or password",
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
               break;
             default:
-              console.warn('Check your internet connection');
+            Alert.alert(
+              "Warning!",
+              "Check your internet connection",
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
           }
           resolve(null);
         }).then(user => {
@@ -25,29 +50,69 @@ class Firebase {
       });
     })
   };
+ 
 
   createFirebaseAccount = (name, email, password) => {
+    
     return new Promise(resolve => {
+      
       firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
         switch (error.code) {
           case 'auth/email-already-in-use':
-            console.warn('This email address is already taken');
+          Alert.alert(
+            "Warning!",
+            "This Email address is already taken",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
             break;
           case 'auth/invalid-email':
-            console.warn('Invalid e-mail address format');
+          Alert.alert(
+            "Warning!",
+            "Invalid Email format. Please try again!",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
             break;
           case 'auth/weak-password':
-            console.warn('Password is too weak');
+          Alert.alert(
+            "Warning!",
+            "Password is too weak. Try with special characters/ numbers",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
             break;
           default:
-            console.warn('Check your internet connection');
+          Alert.alert(
+            "Warning!",
+            "Check your internet connection",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
         }
         resolve(false);
       }).then(info => {
         if (info) {
+          
           firebase.auth().currentUser.updateProfile({
             displayName: name
+
           });
+
+         firebase.database().ref('Users/').push({
+              Email: email,
+              UserName: name,
+          });
+          
+          
           resolve(true);
         }
       });
@@ -58,18 +123,46 @@ class Firebase {
     return new Promise(resolve => {
       firebase.auth().sendPasswordResetEmail(email)
         .then(() => {
-          console.warn('Email with new password has been sent');
+          Alert.alert(
+            "Warning!",
+            "Email sent to your Email address with password reset link",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+          );
           resolve(true);
         }).catch(error => {
           switch (error.code) {
             case 'auth/invalid-email':
-              console.warn('Invalid email address format');
+            Alert.alert(
+              "Warning!",
+              "Invalid Email format. Please try again!",
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
               break;
             case 'auth/user-not-found':
-              console.warn('User with this email does not exist');
+            Alert.alert(
+              "Warning!",
+              "This Email address is not registered",
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
               break;
             default:
-              console.warn('Check your internet connection');
+            Alert.alert(
+              "Warning!",
+              "Check your internet connection",
+              [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ],
+              { cancelable: false }
+            );
           }
           resolve(false);
         });
