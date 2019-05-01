@@ -29,16 +29,16 @@ export default class MenuDrawer extends React.Component {
 					<View style={styles.topLinks}>
 						<View style={styles.profile}>
 							<View style={styles.imgView}>
-							
+								<Image style={styles.img} source={require('../assests/fndealz.png')} />
 							</View>
 							<View style={styles.profileText}>
-								<Text style={styles.name}>Hays Stanford</Text>
+								<Text style={styles.name}>Next Generation Dressing</Text>
 							</View>
 						</View>
 					</View>
 					<View style={styles.bottomLinks}>
-						{this.navLink('Home', ' Home_Menu_Label')}
-						{this.navLink('Links', 'Student_Menu_Label')}
+						{this.navLink('Home_Menu_Label','Home')}
+						{this.navLink('Student_Menu_Label','Links')}
 						
 					</View>
 				</ScrollView>
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	name: {
+        
 		fontSize: 20,
 		paddingBottom: 5,
 		color: 'white',
@@ -85,12 +86,12 @@ const styles = StyleSheet.create({
 	},
 	img: {
 		height: 70,
-		width: 70,
-		borderRadius: 50,
+		width: 100,
+		borderRadius:0,
 	},
 	topLinks:{
 		height: 160,
-		backgroundColor: 'black',
+		backgroundColor: '#00B8D4',
 	},
 	bottomLinks: {
 		flex: 1,
