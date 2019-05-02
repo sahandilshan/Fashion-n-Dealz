@@ -52,7 +52,7 @@ class Firebase {
   };
  
 
-  createFirebaseAccount = (name, email, password) => {
+  createFirebaseAccount = (name, email, password, phoneNumber) => {
     
     return new Promise(resolve => {
       
@@ -110,6 +110,8 @@ class Firebase {
          firebase.database().ref('Users/').push({
               Email: email,
               UserName: name,
+              PhoneNumber: phoneNumber,
+              flag :0,
           });
           
           

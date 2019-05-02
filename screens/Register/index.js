@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, TouchableOpacity, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback} from 'react-native';
 import {w, h, totalSize} from '../../api/Dimensions';
 import InputField from '../../components/InputField';
 import Continue from './Continue';
 import Firebase from "../../api/Firebase";
+import PhoneInput from 'react-phone-number-input'
 
 const email = require('../../assets/email.png');
 const password = require('../../assets/password.png');
 const repeat = require('../../assets/repeat.png');
 const person = require('../../assets/person.png');
+const phone = require('../../assets/phone.png');
 
 export default class Register extends Component {
   state = {
@@ -17,6 +19,7 @@ export default class Register extends Component {
     isEmailCorrect: false,
     isPasswordCorrect: false,
     isRepeatCorrect: false,
+    isPhoneNumberCorrect: false,
     isCreatingAccount: false,
   };
 
@@ -25,24 +28,26 @@ export default class Register extends Component {
     const email = this.email.getInputValue();
     const password = this.password.getInputValue();
     const repeat = this.repeat.getInputValue();
+    const phoneNumber = this.phoneNumber.getInputValue();
 
     this.setState({
       isNameCorrect: name === '',
       isEmailCorrect: email === '',
       isPasswordCorrect: password === '',
       isRepeatCorrect: repeat === '' || repeat !== password,
+      isPhoneNumberCorrect: phoneNumber === '',
     }, () => {
-      if(name !== '' && email !== '' && password !== '' && (repeat !== '' && repeat === password)){
-        this.createFireBaseAccount(name, email, password);
+      if(name !== '' && email !== '' && password !== '' && (repeat !== '' && repeat === password)&& phoneNumber !== ''){
+        this.createFireBaseAccount(name, email, password,phoneNumber);
       } else {
         console.warn('Fill up all fields correctly');
       }
     })
   };
 
-  createFireBaseAccount = (name, email, password) => {
+  createFireBaseAccount = (name, email, password,phoneNumber) => {
     this.setState({ isCreatingAccount: true });
-    Firebase.createFirebaseAccount(name, email, password)
+    Firebase.createFirebaseAccount(name, email, password,phoneNumber)
       .then(result => {
         if(result) this.props.change('login')();
         this.setState({ isCreatingAccount: false });
@@ -59,6 +64,9 @@ export default class Register extends Component {
         this.setState({ isEmailCorrect: this.email.getInputValue() === '' });
         this.password.input.focus();
         break;
+      case 'PhoneNumber':
+        this.setState({ isPhoneNumberCorrect: this.phoneNumber.getInputValue() === '' });
+        break;
       case 'Password':
         this.setState({ isPasswordCorrect: this.password.getInputValue() === '',
           isRepeatCorrect: (this.repeat.getInputValue() !== ''
@@ -72,6 +80,7 @@ export default class Register extends Component {
   };
 
   render() {
+    
     return(
       <View style={styles.container}>
         <Text style={styles.create}>CREATE ACCOUNT</Text>
@@ -113,6 +122,18 @@ export default class Register extends Component {
           ref={ref => this.repeat = ref}
           icon={repeat}
         />
+        <InputField
+          placeholder="Phone Number"
+          error={this.state.isPhoneNumberCorrect}
+          style={styles.input}
+          keyboardType={'phone-pad'}
+          returnKeyType="done"
+          focus={this.changeInputFocus}
+          ref={ref => this.phoneNumber = ref}
+          icon={phone}
+        />
+                
+       
         <Continue isCreating={this.state.isCreatingAccount} click={this.createUserAccount}/>
         <TouchableOpacity onPress={this.props.change('login')} style={styles.touchable}>
           <Text style={styles.signIn}>{'<'} Sign In</Text>
@@ -150,6 +171,7 @@ const styles = StyleSheet.create({
     marginTop: h(4),
   },
   input: {
-    marginVertical: h(2),
+    marginVertical: h(1.3),
   }
+  
 });
