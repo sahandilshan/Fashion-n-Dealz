@@ -1,10 +1,20 @@
 //This is an example code to Scan QR code//
 import React, { Component } from 'react';
 //import react in our code.
-import { Text, View, Linking, TouchableHighlight, PermissionsAndroid, Platform, StyleSheet} from 'react-native';
+import {
+   Text,
+   View,
+   Linking, 
+   TouchableHighlight, 
+   PermissionsAndroid, 
+   Platform, 
+   StyleSheet
+  } from 'react-native';
+
 // import all basic components
 import { CameraKitCameraScreen, } from 'react-native-camera-kit';
 //import CameraKitCameraScreen we are going to use.
+
 export default class App extends Component {
   constructor() {
     super();
@@ -84,11 +94,11 @@ export default class App extends Component {
     return (
       <View style={{ flex: 1 }}>
         <CameraKitCameraScreen
-          showFrame={false}
+          showFrame={true}////////////////////////
           //Show/hide scan frame
           scanBarcode={true}
           //Can restrict for the QR Code only
-          laserColor={'blue'}
+          laserColor={'red'}
           //Color can be of your choice
           frameColor={'yellow'}
           //If frame is visible then frame color
