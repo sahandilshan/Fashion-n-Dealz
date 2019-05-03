@@ -1,6 +1,6 @@
-//This is an example code to Scan QR code//
+
 import React, { Component } from 'react';
-//import react in our code.
+
 import {
    Text,
    View,
@@ -11,7 +11,7 @@ import {
    StyleSheet
   } from 'react-native';
 
-// import all basic components
+
 import { CameraKitCameraScreen, } from 'react-native-camera-kit';
 //import CameraKitCameraScreen we are going to use.
 
@@ -71,7 +71,7 @@ export default class App extends Component {
     if (!this.state.opneScanner) {
       return (
         <View style={styles.container}>
-            <Text style={styles.heading}>React Native QR Code Example</Text>
+            <Text style={styles.heading}>React Native --- QR Code</Text>
             <Text style={styles.simpleText}>{this.state.qrvalue ? 'Scanned QR Code: '+this.state.qrvalue : ''}</Text>
             {this.state.qrvalue.includes("http") ? 
               <TouchableHighlight
