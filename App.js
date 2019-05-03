@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Button} from 'react-native';
 
-import items from '.src/components/Items/Items';
+//import items from '.src/components/Items/Items';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -23,21 +23,21 @@ export default class App extends Component<Props> {
 
   state = {
     placeName : "",
-    items : [],
+    //items : [],
   }
 
   placeNameChangeHandeler = val => 
   { this.setState({placeName:val});
   }
 
-  placeSubmitHandeler = () => {
-    if (this.state.placeName.trim() === "") {
-      return;
-    }
-  }
+  // placeSubmitHandeler = () => {
+  //   if (this.state.placeName.trim() === "") {
+  //     return;
+  //   }
+  // }
   render() {
 
-    <Items/>
+    //<Items/>
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     padding: 26,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: '#9361dd',
+    backgroundColor: '#c2bdc9',
   },
   inputContainer: {
     //flex: 1,
