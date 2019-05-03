@@ -13,7 +13,7 @@ import {
 
 
 import { CameraKitCameraScreen, } from 'react-native-camera-kit';
-//import CameraKitCameraScreen we are going to use.
+
 
 export default class App extends Component {
   constructor() {
