@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import urllib.request
 import pyrebase
 posts=[
     {
@@ -15,10 +16,11 @@ posts=[
     }
 ]
 config = {
-    "apiKey": "AIzaSyDgCSuHb1FL4UbA7CJsWtKanpMxPdiqUFQ",
-    "authDomain": "app1-3223c.firebaseapp.com",
-    "databaseURL": "https://app1-3223c.firebaseio.com",
-    "storageBucket": "app1-3223c.appspot.com"
+    "apiKey": "AIzaSyBV_rxIEkOuxVL13UtzYTicE3C99g4zZx0",
+    "authDomain": "fashionndealz.firebaseapp.com",
+    "databaseURL": "https://fashionndealz.firebaseio.com",
+    "storageBucket": "fashionndealz.appspot.com",
+   
     }
 # Create your views here.
 def home(request):
@@ -30,12 +32,22 @@ def home(request):
 
 def about(request):
     
+    
 
     firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
 
-    storage = firebase.storage()
+    all_imgs = db.child("customer_pic").get()
+    for img in all_imgs.each():
+        #print(user.key())
+        #print(user.val()) # {name": "Mortimer 'Morty' Smith"}
+        url=img.val()
 
-    storage.child('pics/033ce231-24dc-4698-bd52-d4bc16f0b7a9.jpg').download('','downloaded.jpg')
+    #storage = firebase.storage()
+
+    #storage.child('pics/033ce231-24dc-4698-bd52-d4bc16f0b7a9.jpg').download('','downloaded.jpg')
+
+    urllib.request.urlretrieve(url["url"], "img.jpg")
    
 
     return render(request,'view/about.html')
