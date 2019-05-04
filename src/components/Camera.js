@@ -94,7 +94,22 @@ class Camera extends Component{
             then(res=>res.json()).
             then(parsedRes=>{
               console.log(parsedRes);
-              alert(JSON.stringify(parsedRes));
+              
+            fetch("https://fashionndealz.firebaseio.com/customer_pic.json",{
+              method:"POST",
+              body:JSON.stringify( {url:parsedRes.imageUrl})
+              
+            }).catch((error)=>{
+              console.log("Api call error");
+              alert(error.message);}).
+              then(res=>res.json()).
+              then(parsedres=>{//console.log(parsedres);
+              alert(JSON.stringify(parsedres));
+             });
+             console.log("done");
+
+
+             alert(JSON.stringify(parsedRes));
             });
             console.log("done");
           }
