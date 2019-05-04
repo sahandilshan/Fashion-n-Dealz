@@ -1,48 +1,20 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Slider } from 'react-native';
-import { RNCamera } from 'react-native-camera';
 
-const flashModeOrder = {
-  off: 'on',
-  on: 'auto',
-  auto: 'torch',
-  torch: 'off',
-};
+import React, { Component } from 'react';
+import {Text,View,TouchableHighlight, PermissionsAndroid, StyleSheet} from 'react-native';
+import { CameraKitCameraScreen, } from 'react-native-camera-kit';
 
-const wbOrder = {
-  auto: 'sunny',
-  sunny: 'cloudy',
-  cloudy: 'shadow',
-  shadow: 'fluorescent',
-  fluorescent: 'incandescent',
-  incandescent: 'auto',
-};
 
-const landmarkSize = 2;
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      //variable to hold the value
+      value: '',
+      opneScanner: true,
+    };
+  }
 
-export default class CameraScreen extends React.Component {
-  state = {
-    flash: 'off',
-    zoom: 0,
-    autoFocus: 'on',
-    depth: 0,
-    type: 'back',
-    whiteBalance: 'auto',
-    ratio: '16:9',
-    recordOptions: {
-      mute: false,
-      maxDuration: 5,
-      quality: RNCamera.Constants.VideoQuality['288p'],
-    },
-    isRecording: false,
-    canDetectFaces: false,
-    canDetectText: false,
-    canDetectBarcode: false,
-    faces: [],
-    textBlocks: [],
-    barcodes: [],
-  };
-//function for flip camera
+  //function for flip camera
   toggleFacing() {
     this.setState({
       type: this.state.type === 'back' ? 'front' : 'back',
@@ -78,52 +50,40 @@ export default class CameraScreen extends React.Component {
       zoom: this.state.zoom + 0.1 > 1 ? 1 : this.state.zoom + 0.1,
     });
   }
-//function for set foucs depth
-  setFocusDepth(depth) {
-    this.setState({
-      depth,
-    });
+
+  renderBarcode(value) {
+    //called after te successful scanning of Barcode
+    this.setState({ value: value });
+    this.setState({ opneScanner: false });
   }
 
- /*  takePicture = async function() {
-    if (this.camera) {
-      const data = await this.camera.takePictureAsync();
-      console.warn('takePicture ', data);
-    }
-  }; */
-
-  toggle = value => () => this.setState(prevState => ({ [value]: !prevState[value] }));
-
-// facesDetected = ({ faces }) => this.setState({ faces });
-
-
-  barcodeRecognized = ({ barcodes }) => this.setState({ barcodes });
-
-  renderBarcodes = () => (
-    <View style={styles.facesContainer} pointerEvents="none">
-      {this.state.barcodes.map(this.renderBarcode)}
-    </View>
-  );
-
-  renderBarcode = ({ bounds, data, type }) => (
-    <React.Fragment key={data + bounds.origin.x}>
-      <View
-        style={[
-          styles.text,
-          {
-            ...bounds.size,
-            left: bounds.origin.x,
-            top: bounds.origin.y,
-          },
-        ]}
-      >
-        <Text style={[styles.textBlock]}>{`${data} ${type}`}</Text>
-      </View>
-    </React.Fragment>
-  );
-
   renderCamera() {
-    //const { canDetectFaces, canDetectText, canDetectBarcode } = this.state;
+    var that =this;
+    //Start Scanning
+      async function requestCameraPermission() {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,{
+              'title': 'Permission to use camera',
+              'message': 'We need your permission to access your camera '
+            }
+          )
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            //If CAMERA Permission is granted
+            that.setState({ value: '' });
+            that.setState({ opneScanner: true });
+          } else {
+            alert("Access denied");
+          }
+        } catch (err) {
+          alert("Error!",err);
+          console.warn(err);
+        }
+      }
+      //Calling the camera permission function
+      requestCameraPermission();
+
+       /* //const { canDetectFaces, canDetectText, canDetectBarcode } = this.state;
     const {canDetectBarcode } = this.state;
     return (
 
@@ -243,19 +203,116 @@ export default class CameraScreen extends React.Component {
         </View>
         {!!canDetectBarcode && this.renderBarcodes()}
       </RNCamera>
-    );
+    ); */
+   
+  }
+
+  handlePress = async () => {
+    fetch('http://35.246.54.179/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+  
+          "email" : "sahandilshan222@gmail.com",
+          "pass" : "test1234"
+        })
+  });
+    fetch('http://35.246.54.179/barcode/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "barcode" : "100000001"
+  
+        })
+  })
+      .then((response) => response.json())
+      .then((responseJson) => {
+   //alert("Brand:  " + responseJson.brand +" Discount:  " + responseJson.discount+" Name:  " + responseJson.name + " Img:  " + responseJson.image);
+   <Text style={styles.simpleText}>{'Details: '+ responseJson.brand }</Text>
+  
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
-    return <View style={styles.container}>{this.renderCamera()}</View>;
+    //return <View style={styles.container}>{this.renderCamera()}</View>;
+
+    //If value is set then return this view
+    if (!this.state.opneScanner) {
+      return (
+        //display details
+        <View style={styles.container}>
+            <Text style={styles.simpleText}>{this.state.value ? 'Scanned Code: '+this.state.value : ''}</Text>
+
+            <TouchableHighlight
+              onPress={() => this.renderCamera()}
+              style={styles.button}>
+                <Text style={{ color: '#FFFFFF', fontSize: 12 }}>
+                Back
+                </Text>
+            </TouchableHighlight>
+        </View>
+      );
+    }
+    return (
+      <View style={{ flex: 1 }}>
+      
+        <CameraKitCameraScreen
+
+          cameraOptions={{
+              flashMode: 'auto',
+              focusMode: 'on',
+              zoomMode: 'on',
+              ratioOverlay:'1:1', 
+              ratioOverlayColor: '#00000077'
+          }}
+          showFrame={true}
+          scanBarcode={true}
+          laserColor={'red'}
+          frameColor={'yellow'}
+          colorForScannerFrame={'black'}
+          onReadCode={event =>
+            this.renderBarcode(event.nativeEvent.codeStringValue)
+          }
+        />
+      </View>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
-    backgroundColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'white'
+  },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#2c3539',
+    padding: 10,
+    width:300,
+    marginTop:16
+  },
+  heading: { 
+    color: 'black', 
+    fontSize: 24, 
+    alignSelf: 'center', 
+    padding: 10, 
+    marginTop: 30 
+  },
+  simpleText: { 
+    color: 'black', 
+    fontSize: 20, 
+    alignSelf: 'center', 
+    padding: 10, 
+    marginTop: 16
   },
   flipButton: {
     flex: 0.3,
@@ -299,12 +356,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  landmark: {
-    width: landmarkSize,
-    height: landmarkSize,
-    position: 'absolute',
-    backgroundColor: 'red',
-  },
   faceText: {
     color: '#FFD700',
     fontWeight: 'bold',
@@ -327,4 +378,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
 });
-
