@@ -63,20 +63,25 @@ export default class App extends Component {
   }
 
   handlePress = async () => {
+    //splitting the value of qrcode variable to get the beanch and shop seperately
+    var div = this.state.qrvalue.split(" ");
+    shop = div[0];
+    branch=div[1];
+
     fetch('http://35.246.54.179/detectShop/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "shop_name" :this.state.qrvalue,
-          "branch" : "Kadawatha"
+          "shop_name" :shop,
+          "branch" : branch
          
         })
   })
       .then((response) => response.json())
       .then((responseJson) => {
-      Alert.alert(responseJson.msg+" : "+this.state.qrvalue);
+      Alert.alert(responseJson.msg+" : "+this.state.qrvalue+" branch.");
    
       })
       .catch((error) => {
