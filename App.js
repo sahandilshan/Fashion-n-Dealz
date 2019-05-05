@@ -68,7 +68,7 @@ export default class App extends Component {
     shop = div[0];
     branch=div[1];
 
-    fetch('http://35.246.54.179/detectShop/', {
+    fetch('http://104.196.211.215/detectShop/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
