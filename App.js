@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react';
-import {Text,View,TouchableHighlight, PermissionsAndroid, StyleSheet} from 'react-native';
+import {Text,View,TouchableHighlight, PermissionsAndroid, StyleSheet,Alert} from 'react-native';
 import { CameraKitCameraScreen, } from 'react-native-camera-kit';
 
 
@@ -13,6 +12,12 @@ export default class App extends Component {
       opneScanner: true,
     };
   }
+
+  static navigationOptions =
+  {
+    title: 'BARCODE',
+
+  };
 
   //function for flip camera
   toggleFacing() {
@@ -52,7 +57,7 @@ export default class App extends Component {
   }
 
   renderBarcode(value) {
-    //called after te successful scanning of Barcode
+    //called after the successful scanning of Barcode
     this.setState({ value: value });
     this.setState({ opneScanner: false });
   }
@@ -62,6 +67,7 @@ export default class App extends Component {
     //Start Scanning
       async function requestCameraPermission() {
         try {
+		//request permission from user
           const granted = await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.CAMERA,{
               'title': 'Permission to use camera',
@@ -83,162 +89,48 @@ export default class App extends Component {
       //Calling the camera permission function
       requestCameraPermission();
 
-       /* //const { canDetectFaces, canDetectText, canDetectBarcode } = this.state;
-    const {canDetectBarcode } = this.state;
-    return (
-
-      <RNCamera
-        ref={ref => {
-          this.camera = ref;
-        }}
-        style={{
-          flex: 1,
-        }}
-        type={this.state.type}
-        flashMode={this.state.flash}
-        autoFocus={this.state.autoFocus}
-        zoom={this.state.zoom}
-        whiteBalance={this.state.whiteBalance}
-        ratio={this.state.ratio}
-        focusDepth={this.state.depth}
-        permissionDialogTitle={'Permission to use camera'}
-        permissionDialogMessage={'We need your permission to use your camera phone'}
-        faceDetectionLandmarks={
-          RNCamera.Constants.FaceDetection.Landmarks
-            ? RNCamera.Constants.FaceDetection.Landmarks.all
-            : null
-        }
-        //onFacesDetected={canDetectFaces ? this.facesDetected : null}
-        //onTextRecognized={canDetectText ? this.textRecognized : null}
-        onGoogleVisionBarcodesDetected={canDetectBarcode ? this.barcodeRecognized : null}
-      >
-        <View
-          style={{
-            flex: 0.5,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: 'transparent',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            <TouchableOpacity style={styles.flipButton} onPress={this.toggleFacing.bind(this)}>
-              <Text style={styles.flipText}> FLIP </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.flipButton} onPress={this.toggleFlash.bind(this)}>
-              <Text style={styles.flipText}> FLASH: {this.state.flash} </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.flipButton} onPress={this.toggleWB.bind(this)}>
-              <Text style={styles.flipText}> WB: {this.state.whiteBalance} </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              backgroundColor: 'transparent',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            
-            <TouchableOpacity onPress={this.toggle('canDetectBarcode')} style={styles.flipButton}>
-              <Text style={styles.flipText}>
-                {!canDetectBarcode ? 'Detect Barcode' : 'Detecting Barcode'}
-              </Text>
-            </TouchableOpacity>
-
-          </View>
-        </View>
-
-        <View        
-          style={{
-            flex: 0.4,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-          }}
-        >
-          <Slider
-            style={{ width: 150, marginTop: 15, alignSelf: 'flex-end' }}
-            onValueChange={this.setFocusDepth.bind(this)}
-            step={0.1}
-            disabled={this.state.autoFocus === 'on'}
-          />
-        </View>
-
-        {this.state.zoom !== 0 && (
-          <Text style={[styles.flipText, styles.zoomText]}>Zoom: {this.state.zoom}</Text>
-        )}
-
-        <View
-          style={{
-            flex: 0.1,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-            alignSelf: 'flex-end',
-          }}
-        >
-          <TouchableOpacity
-            style={[styles.flipButton, { flex: 0.1, alignSelf: 'flex-end' }]}
-            onPress={this.zoomIn.bind(this)}
-          >
-            <Text style={styles.flipText}> + </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.flipButton, { flex: 0.1, alignSelf: 'flex-end' }]}
-            onPress={this.zoomOut.bind(this)}
-          >
-            <Text style={styles.flipText}> - </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.flipButton, { flex: 0.25, alignSelf: 'flex-end' }]}
-            onPress={this.toggleFocus.bind(this)}
-          >
-            <Text style={styles.flipText}> AF : {this.state.autoFocus} </Text>
-          </TouchableOpacity>
-
-        </View>
-        {!!canDetectBarcode && this.renderBarcodes()}
-      </RNCamera>
-    ); */
-   
+    
+  }
+//function to send http POST request
+  handlePress = async (value) => {
+    //fetching with server
+    fetch('http://104.196.211.215/barcode/', {
+      method: 'POST',
+      headers: {
+      Accept: 'application/json',
+     'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+       'barcode':value
+     
+      }),
+    
+     }).then((response) => response.json())
+     .then((responseJson) => {
+      console.log(responseJson);
+	  //check value is emmpty or not
+      if(this.isEmpty(responseJson)){
+       Alert.alert("Sorry Item Not Found");
+      }
+      else{
+        this.props.navigation.navigate('BarcodeView',{name:responseJson.name,brand:responseJson.brand,image:responseJson.image,price:responseJson.price}); 
+      }
+     
+    //
+     
+    })
+    .catch((error) => {
+    console.error(error);
+    });
   }
 
-  handlePress = async () => {
-    fetch('http://35.246.54.179/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-  
-          "email" : "sahandilshan222@gmail.com",
-          "pass" : "test1234"
-        })
-  });
-    fetch('http://35.246.54.179/barcode/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "barcode" : "100000001"
-  
-        })
-  })
-      .then((response) => response.json())
-      .then((responseJson) => {
-   //alert("Brand:  " + responseJson.brand +" Discount:  " + responseJson.discount+" Name:  " + responseJson.name + " Img:  " + responseJson.image);
-   <Text style={styles.simpleText}>{'Details: '+ responseJson.brand }</Text>
-  
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+};
 
   render() {
     //return <View style={styles.container}>{this.renderCamera()}</View>;
@@ -246,15 +138,25 @@ export default class App extends Component {
     //If value is set then return this view
     if (!this.state.opneScanner) {
       return (
-        //display details
+        //display details of barcode
         <View style={styles.container}>
             <Text style={styles.simpleText}>{this.state.value ? 'Scanned Code: '+this.state.value : ''}</Text>
 
+           //test barcode with database
+            <TouchableHighlight
+              onPress={() => this.handlePress(this.state.value)}
+              style={styles.button}>
+                <Text style={{ color: '#FFFFFF', fontSize: 12 }}>
+                 Match With Store
+                </Text>
+            </TouchableHighlight>
+			
+			    //go back and scan barcode again
             <TouchableHighlight
               onPress={() => this.renderCamera()}
               style={styles.button}>
                 <Text style={{ color: '#FFFFFF', fontSize: 12 }}>
-                Back
+                Scan Again
                 </Text>
             </TouchableHighlight>
         </View>
@@ -285,7 +187,7 @@ export default class App extends Component {
     );
   }
 }
-
+//styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
