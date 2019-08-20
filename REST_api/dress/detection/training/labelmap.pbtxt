@@ -1,0 +1,17 @@
+item {
+  id: 1
+  name: 'shirt'
+}
+item {
+  id: 2
+  name: 't_shirt'
+}
+item {
+  id: 3
+  name: 'tie'
+}
+item {
+  id: 4
+  name: 'nike'
+}
+
